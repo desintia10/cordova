@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#insert").click(function() {
+                var title = $("#title").val();
+                var duration = $("#duration").val();
+                var price = $("#price").val();
+                var dataString = "title=" + title + "&duration=" + duration + "&price=" + price + "&insert=";
+                if ($.trim(title).length > 0 & $.trim(duration).length > 0 & $.trim(price).length > 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: "https://crinated-wrenches.000webhostapp.com/insert.php",
+                        data: dataString,
+                        crossDomain: true,
+                        cache: false,
+                        beforeSend: function() {
+                            $("#insert").val('Connecting...');
+                        },
+                        success: function(data) {
+                            if (data == "success") {
+                                alert("inserted");
+                                $("#insert").val('submit');
+                            } else if (data == "error") {
+                                alert("error");
+                            }
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar bg-primary">
+        <a href="#">&nbsp;</a>
+        <h3 class="text-wrap text-white">Insert Database</h3>
+        <a href="index.html" class="btn btn-light">Home</a>
+    </nav>
+    <div class="container">
+    <div class="row" style="padding-top: 70px">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td colspan="2" class="bg-primary text-white"><strong>Insert</strong></td>
+          </tr>
+          <tr>
+              <td>Title</td>
+              <td>
+                <input class="form-control" type="text" id="title" value="" />
+              </td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td><input class="form-control" type="text" id="duration" value="" /></td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td><input class="form-control" type="text" id="price" value="" /></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="button" id="insert" class="btn btn-primary btn-block" value="Insert" /></td>
+          </tr>
+          </form>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  </div>
+</body>
+
+</html>
